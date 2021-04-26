@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.4.1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:p1="clr-namespace:Bonsai.PointGrey;assembly=Bonsai.PointGrey"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:osc="clr-namespace:Bonsai.Osc;assembly=Bonsai.Osc"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="p1:FlyCapture">
+          <p1:Index>0</p1:Index>
+          <p1:ColorProcessing>Default</p1:ColorProcessing>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Image</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:Flip">
+          <cv:Mode>Both</cv:Mode>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:VideoWriter">
+          <cv:FileName>F:\rawvideos\rawvideo.avi</cv:FileName>
+          <cv:Suffix>Timestamp</cv:Suffix>
+          <cv:Buffered>true</cv:Buffered>
+          <cv:Overwrite>false</cv:Overwrite>
+          <cv:FourCC>FMP4</cv:FourCC>
+          <cv:FrameRate>80</cv:FrameRate>
+          <cv:FrameSize>
+            <cv:Width>0</cv:Width>
+            <cv:Height>0</cv:Height>
+          </cv:FrameSize>
+          <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:Grayscale" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:Threshold">
+          <cv:ThresholdValue>51</cv:ThresholdValue>
+          <cv:MaxValue>255</cv:MaxValue>
+          <cv:ThresholdType>BinaryInv</cv:ThresholdType>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:FindContours">
+          <cv:Mode>External</cv:Mode>
+          <cv:Method>ChainApproxNone</cv:Method>
+          <cv:Offset>
+            <cv:X>0</cv:X>
+            <cv:Y>0</cv:Y>
+          </cv:Offset>
+          <cv:MinArea xsi:nil="true" />
+          <cv:MaxArea xsi:nil="true" />
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:LargestBinaryRegion" />
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Centroid.X</Selector>
+      </Expression>
+      <Expression xsi:type="scr:PythonTransform">
+        <scr:Script>globalx = 0
+import math
+
+@returns(int)
+def process(value):
+  global globalx
+  if math.isnan(value) == True:
+    x = globalx
+  if value == 0:
+    x = globalx
+  if math.isnan(value) == False:
+    if value != 0:
+      x = value
+      globalx = x
+  return x</scr:Script>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Centroid.Y</Selector>
+      </Expression>
+      <Expression xsi:type="scr:PythonTransform">
+        <scr:Script>globaly = 0
+import math
+
+@returns(int)
+def process(value):
+  global globaly
+  if math.isnan(value) == True:
+    y = globaly
+  if value == 0:
+    y = globaly
+  if math.isnan(value) == False:
+    if value != 0:
+      y = value
+      globaly = y
+  return y</scr:Script>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="scr:PythonTransform">
+        <scr:Script>globalx = 0
+import math
+
+@returns(int)
+def process(value):
+  global globalx
+  com_x = value.Item1.Item1
+  com_y = value.Item1.Item2
+  extreme1_x = value.Item2.Item1
+  extreme1_y = value.Item2.Item2
+  extreme2_x = value.Item3.Item1
+  extreme2_y = value.Item3.Item2
+
+  nosepositionx = com_x
+  return nosepositionx</scr:Script>
+      </Expression>
+      <Expression xsi:type="scr:PythonTransform">
+        <scr:Script>globaly = 0
+import math
+
+@returns(int)
+def process(value):
+  global globaly
+  com_x = value.Item1.Item1
+  com_y = value.Item1.Item2
+  extreme1_x = value.Item2.Item1
+  extreme1_y = value.Item2.Item2
+  extreme2_x = value.Item3.Item1
+  extreme2_y = value.Item3.Item2
+
+  nosepositiony = com_y
+
+
+  return nosepositiony</scr:Script>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="scr:PythonTransform">
+        <scr:Script>globalx = 0
+import math
+
+@returns(int)
+def process(value):
+  global globalx
+  com_x = value.Item1.Item1
+  com_y = value.Item1.Item2
+  extreme1_x = value.Item2.Item1
+  extreme1_y = value.Item2.Item2
+  extreme2_x = value.Item3.Item1
+  extreme2_y = value.Item3.Item2
+
+  headpositionx = com_x
+
+
+  return headpositionx</scr:Script>
+      </Expression>
+      <Expression xsi:type="scr:PythonTransform">
+        <scr:Script>globaly = 0
+import math
+
+@returns(int)
+def process(value):
+
+  com_x = value.Item1.Item1
+  com_y = value.Item1.Item2
+  extreme1_x = value.Item2.Item1
+  extreme1_y = value.Item2.Item2
+  extreme2_x = value.Item3.Item1
+  extreme2_y = value.Item3.Item2
+
+  headpositiony = com_y
+  return headpositiony</scr:Script>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="scr:PythonTransform">
+        <scr:Script>import clr
+clr.AddReference("OpenCV.Net")
+from OpenCV.Net import *
+
+nosecolor = Scalar.Rgb(255,0,0)
+headcolor = Scalar.Rgb(255,255,0)
+comcolor = Scalar.Rgb(50,50,255)
+linecolor = Scalar.Rgb(100,100,100)
+orientationcolor = Scalar.Rgb(255,255,255)
+linethickness = 7
+circlethickness = 10
+
+@returns(IplImage)
+def process(value):
+  image = value.Item1
+  pt1 = value.Item2.Item1
+  pt2 = value.Item2.Item2
+  head1 = value.Item3.Item1
+  head2 = value.Item3.Item2
+  com1 = value.Item4.Item1
+  com2 = value.Item4.Item2
+
+  height = image.Size.Height
+  xmin = 85; xmax = 1100; x = xmax - xmin
+  ymin = 35; ymax = 655; y = ymax - ymin
+  width = image.Size.Width
+  CV.Line(image,Point((x/3)+xmin,ymin),Point((x/3)+xmin,ymax),linecolor,thickness = linethickness)
+  CV.Line(image,Point((x*2/3)+xmin,ymin),Point((x*2/3)+xmin,ymax),linecolor,thickness= linethickness)
+  CV.Line(image,Point(xmin,(y/2)+ymin),Point(xmax,(y/2)+ymin),linecolor,thickness = linethickness)
+  CV.Line(image,Point(pt1,pt2),Point(head1,head2),orientationcolor,thickness = 2)
+  CV.Line(image,Point(com1,com2),Point(head1,head2),orientationcolor,thickness = 2)
+
+  CV.Circle(image,Point(pt1,pt2),circlethickness,nosecolor,-1)
+  CV.Circle(image,Point(head1,head2),circlethickness,headcolor,-1)
+  CV.Circle(image,Point(com1,com2),circlethickness,comcolor,-1)
+ 
+  return image
+</scr:Script>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="osc:SendMessage">
+        <osc:Connection>2python</osc:Connection>
+        <osc:Address>/2python</osc:Address>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Timestamp" />
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Timestamp</Selector>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>LocalDateTime.TimeOfDay.TotalSeconds</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="io:TextWriter">
+          <io:FileName>F:\rawvideos\rawvideo.txt</io:FileName>
+          <io:Suffix>Timestamp</io:Suffix>
+          <io:Buffered>true</io:Buffered>
+          <io:Overwrite>false</io:Overwrite>
+          <io:Append>false</io:Append>
+        </Combinator>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="2" To="3" Label="Source1" />
+      <Edge From="2" To="4" Label="Source1" />
+      <Edge From="3" To="23" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="8" To="11" Label="Source1" />
+      <Edge From="9" To="10" Label="Source1" />
+      <Edge From="10" To="13" Label="Source1" />
+      <Edge From="10" To="25" Label="Source5" />
+      <Edge From="10" To="14" Label="Source1" />
+      <Edge From="10" To="15" Label="Source1" />
+      <Edge From="11" To="12" Label="Source1" />
+      <Edge From="12" To="13" Label="Source2" />
+      <Edge From="12" To="25" Label="Source6" />
+      <Edge From="12" To="14" Label="Source2" />
+      <Edge From="12" To="15" Label="Source2" />
+      <Edge From="13" To="16" Label="Source1" />
+      <Edge From="13" To="23" Label="Source4" />
+      <Edge From="14" To="16" Label="Source2" />
+      <Edge From="15" To="16" Label="Source3" />
+      <Edge From="16" To="17" Label="Source1" />
+      <Edge From="16" To="18" Label="Source1" />
+      <Edge From="16" To="20" Label="Source1" />
+      <Edge From="16" To="21" Label="Source1" />
+      <Edge From="17" To="19" Label="Source1" />
+      <Edge From="17" To="25" Label="Source1" />
+      <Edge From="18" To="19" Label="Source2" />
+      <Edge From="18" To="25" Label="Source2" />
+      <Edge From="19" To="23" Label="Source2" />
+      <Edge From="20" To="22" Label="Source1" />
+      <Edge From="20" To="25" Label="Source3" />
+      <Edge From="21" To="22" Label="Source2" />
+      <Edge From="21" To="25" Label="Source4" />
+      <Edge From="22" To="23" Label="Source3" />
+      <Edge From="23" To="24" Label="Source1" />
+      <Edge From="25" To="26" Label="Source1" />
+      <Edge From="26" To="27" Label="Source1" />
+      <Edge From="27" To="28" Label="Source1" />
+      <Edge From="28" To="29" Label="Source1" />
+      <Edge From="29" To="30" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
