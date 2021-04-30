@@ -1,0 +1,68 @@
+FMOS PROCEDURE
+General Practices
+1.	Always handle mice with gloves on
+2.	Turn on main and local air and N2 for entirety of training period
+3.	Keep subject under observation – check for irregularities in behavior or performance periodically
+4.	Copy and paste python errors into a text file on the desktop (labeled “Python Errors”) & report in lab notebook and to supervisor
+5.	Keep neat lab notebook (see previous sessions for reference) and careful notes. 
+6.	Work slowly and methodically – think about each step you are going through. 
+
+Training Procedure – do this for each subject
+
+1.	Update preferences in fmos_preferences_bonsai.py & lab notebook
+2.	Make sure main & local air are on (leave on for entirety of training period) 
+3.	Make sure tank, main switch, & local switch N2 are on for entirety of training period 
+4.	ODOR VIALS: Check olfactometer vials before running mice to make sure they are correct. All experiments should have odor vials in the following configuration unless otherwise specified: vial #6 = CONTROL, vial #7 = 1% pinene, vial #8 = 0.1% pinene, vial #9 = DUMMY 
+5.	Inspect mouse (brief health check) and weigh in beaker on scale
+6.	Flip on laminarizer switch (labeled, far right above the rig) – do this before putting in mouse to reduce stress. This delivers constant airflow across the behavioral assay. 
+7.	RECORDING SNIFFING: if recording sniffing, place head restraint platform in box and plug in thermistor pins. (see below)
+a.	Gently scruff mouse below the nape of the neck
+b.	Restrain by inserting headbar into slots of the platform holding down head and body
+c.	Gently plug wire hanging from commutator into mouse’s headpins
+d.	Make sure pins are aligned and check for signal on oscilloscope before releasing mouse
+8.	NOSTRIL OCCLUSIONS: if running a nostril-occlusion experiment, you will need to test the nostril stitch using the following procedure. 
+a.	Fill a blunt-tipped needle and syringe with chlorinated water from the mouse facility
+b.	Gently scruff mouse below the nape of the neck 
+c.	Note which nostril is stitched and whether it is a sham (nostril still open) or stitch 
+d.	If stitched shut, place small bubble of water on top of stitch using the syringe
+e.	If water seeps or bubbles, stitch is not sealed, do not run mouse and notify supervisor. 
+9.	Place subject in behavior box, close and secure doors to behavior box, close rig door, and run appropriate program (please ensure rig doors shut evenly) – note ‘start time’ in lab notebook
+a.	Trainer #1: trainer#1_alternation.py
+b.	Trainer #2: trainer#2_odorassociation.py
+c.	All other programs: fmos_mastercode_bonsai.py
+10.	Once python program says “Initializing Data Collection…” in the command console, go to your open bonsai program and press the green ‘play’ arrow
+11.	Use Bonsai video to monitor subject – if there are behavioral irregularities, see supervisor
+a.	Sessions can be manually ended by selecting external window and pressing ‘q’
+
+ENDING SESSION
+12.	Turn off the laminarizer air valve first to indicate to the subject that the session has ended.
+13.	Report notes in python command console. Write in full sentences, inside quotation marks, with no spaces at the end. Press enter. 
+14.	Press ‘stop’ button (red square) in Bonsai program. 
+15.	Record session statistics in the lab notebook (they should be reported in the command console of python)
+16.	Weigh subject and record final weight and approximate session end time in lab notebook.
+17.	Return subject to home cage and clean out rig box with bleach and then ethanol thoroughly.
+a.	Paper towels and cleaning supplies are to your right on window sill 
+b.	Carefully clean nosepokes and walls 
+18.	Update subject information in lab notebook & fmos_preferences_bonsai.py before putting in a new subject 
+19.	Restart at Step #1 with next subject 
+
+
+
+System Shutdown
+
+After you have run all subjects for the day, power down rig in the following order: 
+1.	Carefully clean out rig with bleach and ethanol
+2.	Turn off laminarizer, local air, and main air
+3.	Turn of local N2, main N2, and N2 tank (first check with other rigs to ensure they are not using the N2)
+4.	Turn off lamps/behavior board, THEN teensies, THEN power strip (always turn off local before global) 
+5.	Unplug camera (blue USB cable) from back of computer
+6.	Power off computer (except when running data backup) 
+
+**BEFORE LEAVING LAB**
+mice should be watered/inspected/returned to facility
+**
+boards should all be switched off (both locally and globally)
+**
+nitrogen tank should be CLOSED
+**
+lab lights turned off & door locked

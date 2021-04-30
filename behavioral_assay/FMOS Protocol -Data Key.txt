@@ -1,0 +1,59 @@
+DATA KEY FOR FMOS BEHAVIORAL ASSAY 
+
+This key represents how data is saved through the programs available on this github project. At the end of our project, this dataset was reformatted for publishing on DRYAD (doi:10.5061/dryad.r7sqv9sc0). Therefore, our analysis code will not read the below format properly as the directories/data tables are slightly different. You may reformat according to the published dataset or contact us directly for information and our code that standardizes the dataset and makes it readable for our data analysis/visualization programs.  
+
+DATAPATH
+Data is separated by subject. Inside each subject folder are sub-folders for training or experimental condition (i.e. 100-0, 80-20, 60-40, interleaved, trainer1, trainer2, etc.). Inside each condition folder is every session run in that condition. Each session folder contains the files below. One example datapath to these files could be: 
+
+Dropbox/data/Mouse_2054/80-20/2/
+
+This would mean subject #2054 in the 80-20 condition in his 2nd session of running. 
+
+FILE TYPES
+tracking coordinates (continuous sampling at 80 Hz)
+comx.dat = center of mass x-coordinate 
+comy.dat = center of mass y-coordinate  
+headx.dat = head x-coordinate 
+heady.dat = head y-coordinate 
+nosex.dat = nose x-coordinate 
+nosey.dat = nose y-coordinate 
+timestamp.dat = timestamp of video frame 
+
+sniff & nose poke signals
+NP.dat = nose poke status (see key below) 
+sniff.dat = sniff signal
+
+information files
+timestamp.txt = timestamp beginning of session
+videolocation.txt = name of raw video file in system hard drive for easy location
+notes.txt = session summary 
+trialsummary.txt = a description of each trial in the session 
+
+extraneous information
+LFV.dat = left odor valve on/off - DO NOT USE (not set up yet)
+RFV.dat = right odor valve on/off - DO NOT USE (not set up yet) 
+
+DATA KEYS & INFORMATION
+sniff & nose poke signals
+Sniff signal is output in arbitrary Arduino units that directly correspond with voltage output from an amplifier. 
+
+information files
+Timestamp format: year – month – day T hour – minute – second 
+
+Notes File
+This file gives you general information about the session. It has presets in fmos_preferences, but the actual function for saving the notes file is in fmos_datamgt and can be customized to include whatever information you would like. 
+
+Trial Summary File
+This file is organized with variables sorted by columns and trials sorted by row with a “,” as the delimiter. Each row will provide you the following information for one trial: 
+
+trial #, condition, active odor valve, response, trial start time (s), trial end time (s), dilution of odorant in odor vial
+
+NUMERICAL VARIABLE KEYS
+Nose poke signal
+ 0 = no poke, 1 = right poke, 2 = left poke, 3 = initiation port poke
+Condition
+0 = 100-0, 1 = 80-20, 2 = 60-40, 3 = control
+Active valve
+1 = right odor valve, 2 = left odor valve
+Response
+1 = correct, 0 = incorrect

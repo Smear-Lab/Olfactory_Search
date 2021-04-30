@@ -1,0 +1,91 @@
+FMOS - SET UP
+General Setup
+
+1.	Power up system in the following order: powerstrip, behavior board (top of rig), teensy boards (left first, wait 5s, then right, behind rig), lamps (between rigs)
+a.	NOTE: green tape = on, no tape = off
+2.	Plug in camera (blue USB cable) into USB 3.0 port of the computer. (correct port is labeled)
+
+ 
+
+3.	Turn on computer only after steps 1 and 2 have been completed. 
+4.	On the computer, open Eclipse (purple python program) & Arduino (green infinity sign) 
+a.	We will start in the Arduino program and move to Python afterwards (see below) 
+
+
+Arduino 
+
+Teensy Board Set Up
+
+1.	Upload Program
+a.	File -> Sketchbook -> teensy
+b.	Tools -> Board: -> Teensy 2.0
+c.	Tools -> Port: -> COM5
+d.	Press arrow pointing to the left to upload the program
+
+2.	Open the serial monitor (magnifying glass button, top right) and type in the following commands:
+a.	“MFC 1 1 0” -> Enter (you should see “MFC set” as a response)
+b.	“MFC 2 1 0” -> Enter (you should see “MFC set” as a response)
+
+KEY: MFC = “mass flow controller”, 1 OR 2 = right or left board respectively, 
+1 OR 2 = air or nitrogen respectively, 0 = % flow the controller is set to
+
+3.	If you do not see proper response, turn off corresponding Teensy board (behind rig, 1 = right, 2 = left), wait 5 seconds, turn back on, and repeat upload procedure
+
+ 
+
+Water Calibration Procedure I: Flush the System
+
+1.	Ensure that water in storage syringes (on right side and back of rig) are filled to appropriate level (more than 20mL)
+2.	Push out metal water tubes from right (RNP), left (LNP), and back (BNP) nosepokes so that they are extended into the rig and place 1 mL Eppendorf tubes beneath to catch water
+3.	In Arduino, select water_calibration sketch as well as corresponding port and board
+a.	File -> Sketchbook -> WaterCalibration
+b.	Tools -> Board: -> Arduino Mega or Mega 2560
+c.	Tools -> Port: -> COM6
+d.	Upload program to board (see teensy upload above) 
+4.	In the Arduino code in the sketch, set the variable “type_calibration =” to 0. 
+5.	Upload the program to the board. It will run automatically and deliver ~30 large water rewards from each of the three water ports – shake water out of Eppendorf tubes and dry them thoroughly with Kim wipe after water valves stop clicking.
+NOTE: You will likely need to plunge the water syringes (plunger located behind the rig) to
+expedite this process (this will push water through the tubes and expel bubbles a lot faster) 
+6.	Repeat until all air bubbles are dispelled – CHECK TUBING FOR GAPS IN WATER
+
+Water Calibration Procedure II: Calibrating Water Ports
+*Calibrate the left, right, and back water ports to each other using the following protocol for each*
+
+7.	Set “type_calibration =” to 1 (for right port), 2 (for left port), or 3 (for initiation back port)
+a.	you will not need to calibrate the initiation port unless you are running mice in trainer #1
+b.	check comments in Arduino script to verify ‘type_calibration’ numbers are correct
+8.	Upload program to board – after water valve stops releasing, weigh water in tube and adjust the calibration variable for the corresponding port. Repeat process until the weight is between 1.6 and 1.8 grams (6-8 microliters per reward) OR is, at minimum, within 10% of the other water port delivery weights (you should be able to get it within 1%)
+9.	Amount of time the valve is open can be adjusted for each water port by changing the calibration variables. These are “watercalL”, “watercalR”, and “watercalNP” for the left, right, and back water ports respectively (this value is measured in milliseconds) 
+10.	When water ports are calibrated to each other, copy and paste updated “watercalL”, “watercalR”, and “watercalNP” values to ver3_sarmod (see below)
+
+Push metal tubes back until the larger metal opening is flush with the back wall of each nosepoke port & secure position of tube by pinching the putty on the back of each nosepoke 
+
+Behavior Board Set Up
+
+•	File -> Sketchbook -> ver3_sarmod
+•	Tools -> Board: -> Arduino Mega or Mega 2560
+•	Tools -> Port: -> COM6
+•	Upload program to board (see how to upload the teensy)
+
+Before uploading, ensure calibration values at the top of ver3_sarmod to match the equivalent values in WaterCalibration! This is the only way to ensure equal water rewards from either water port during the session. 
+
+Bonsai
+
+Open desktop shortcut called Bonsai Programs & open FMON_headtracking_tf02.bonsai
+
+NOTE: if mice do not have red head paint or you do not plan to track the mouse’s head for another reason, open FMON_COMtracking.bonsai
+
+Python
+
+Open eclipse, and open the following scripts from the workspace (left-hand window): behavioral_assay_2.0  -> fmos_preferences_bonsai.py
+•	input water calibration values
+•	input your name under ‘Experimenter’ and your trainer’s name (if present) 
+
+If mouse has sniff signal, turn on the oscilloscope the visualize sniffing
+
+**BEFORE RUNNING MICE**
+ Push water tube back in place
+**
+Turn on rig lights
+**
+load ver3_sarmod onto Mega2560 Arduino Board
