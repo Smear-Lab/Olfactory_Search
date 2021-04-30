@@ -71,9 +71,9 @@ Before uploading, ensure calibration values at the top of ver3_sarmod to match t
 
 Bonsai
 
-Open desktop shortcut called Bonsai Programs & open FMON_headtracking_tf02.bonsai
+Open desktop shortcut called Bonsai Programs & open FMOS_headtracking_tf02.bonsai
 
-NOTE: if mice do not have red head paint or you do not plan to track the mouse’s head for another reason, open FMON_COMtracking.bonsai
+NOTE: if mice do not have red head paint or you do not plan to track the mouse’s head for another reason, open FMOS_COMtracking.bonsai
 
 Python
 
