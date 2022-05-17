@@ -6,9 +6,12 @@ Thermistors: https://www.digikey.com/products/en?keywords=223-1558-ND, PN: 223-1
 
 Thermistor Pins: 
 https://www.digikey.com/product-detail/en/mill-max-manufacturing-corp/861-13-050-10-002000/ED1110-ND/3317930, PN: ED1110-ND
-Note: As of earlier this year, these pins no longer mate well with each other...however, we have found that if you clip the ends off the pins, you can get them to mate well enough for freely moving recordings. Happy to discuss this further when you get to this point – we have a few alternative pin options in the lab now. 
+Note: As of earlier this year, these pins no longer mate well with each other...however, we have found that if you clip the ends off the pins, you can get them to mate well enough for freely moving recordings. As of 2021, our lab has moved to an alternative set of pins. 
+
+Alternative Thermistor Pins: https://www.digikey.com/en/products/detail/jst-sales-america-inc/A02KR02DS28W51B/6194825?s=N4IgTCBcDaICwFYEFoDMBGA7ABmQOQBEQBdAXyA
 
 I cut end of the thermistor wire to a couple cm from the glass bead (just enough to reach pins between the ears) and separate/strip the individual wires at the end with a razor blade. I then solder those wires into two of the gold-hole pins referenced above (the pins will come in a strip, just clip them so you have a block of 2 at a time).
+If using the alternative pins, separate pins from jumper wire they come on using plyers/forceps and solder female pin end to thermistor ends. Use male ends for commutator wire. 
 
 SURGERY
 
